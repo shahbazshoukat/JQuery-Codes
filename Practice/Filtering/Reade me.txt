@@ -1,0 +1,4 @@
+Developer: Bilal Shahzad
+
+Purpose: The purpose of this exercise to learn how rows in a table can be filtered by its data.
+

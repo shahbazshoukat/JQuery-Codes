@@ -1,0 +1,148 @@
+<html>
+<head>
+    <title>Data Filtering</title>
+    <script src="../jquery-1.9.1.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        /* ------New selections/functions used in this excercicse---------
+        :not
+        :contains
+        .indexOf
+        */
+
+        $(document).ready(MainFunction);
+
+        function MainFunction() {
+
+            //Bind keyup event of Name text box in header to filter data available in first column
+            $(".filterByName").bind('keyup', function () {
+                var $valToFilter = $(this).val();
+                //Make All rows visible 
+                $(".tabledata tr").show();
+                if ($valToFilter != "") {
+                    //Find all rows, then find first TD from each row, which doesn't contain our filter text, find parent tr and then hide all these TRs
+                    $(".tabledata tr").find("td:first:not(:contains('" + $valToFilter + "'))").closest("tr").hide();
+                }//end of i
+            }); //end of filterByName keyup event
+
+
+            //Bind keyup event of Contact text box in header to filter data available in second column
+            $(".filterByContact").bind('keyup', function () {
+                var $valToFilter = $(this).val();
+                //Make All rows visible 
+                $(".tabledata tr").show();
+
+                if ($valToFilter != "") {
+                    //Find all rows, then find second TD from each row, iterate all found tds
+                    $(".tabledata tr").find("td:nth(1)").each(function () {
+
+                        //find text box and get its value, $(this) is our td
+                        var val = $(this).find("input.contact").val();
+
+                        //Check if text box value contains the filter text or not
+                        if (val.indexOf($valToFilter) == -1) //doesn't contain the filter text
+                        {
+                            //hide parent tr
+                            $(this).closest('tr').hide();
+                        }
+                    });//end of each
+                }//end of if
+            }); //end of filterByContact keyup event
+
+
+            //Bind keyup event of City text box in header to filter data available in third column
+            $(".filterByCity").bind('keyup', function () {
+                var $valToFilter = $(this).val();
+                //Make All rows visible 
+                $(".tabledata tr").show();
+
+                if ($valToFilter != "") {
+                    //Find all rows, then find THIRD TD from each row, iterate all found tds
+                    $(".tabledata tr").find("td:nth(2)").each(function () {
+
+                        //find selected option from dropdown
+                        var val = $(this).find("select option:selected").text();
+
+                        //Check if text box value contains the filter text or not
+                        if (val.indexOf($valToFilter) == -1) //doesn't contain the filter text
+                        {
+                            //hide parent tr
+                            $(this).closest('tr').hide();
+                        }
+                    }); //end of each
+                } //end of if
+            }); //end of filterByContact keyup event
+
+        } //End of MainFunction
+    
+    </script>
+    <div>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                        <input type="text" class="filterByName" />
+                    </th>
+                    <th>
+                        Contact
+                        <input type="text" class="filterByContact" />
+                    </th>
+                    <th>
+                        City
+                        <input type="text" class="filterByCity" />
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="tabledata">
+                <tr>
+                    <td>
+                        Bilal
+                    </td>
+                    <td>
+                        <input type="text" class="contact" value='1324132434' />
+                    </td>
+                    <td>
+                        <select>
+                            <option value='1'>--selected--</option>
+                            <option value='1' selected="selected">Lahore</option>
+                            <option value='2'>Karachi</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        waqas
+                    </td>
+                    <td>
+                        <input type="text" class="contact" value='34434343' />
+                    </td>
+                    <td>
+                        <select>
+                            <option value='1'>--selected--</option>
+                            <option value='1' selected="selected">Lahore</option>
+                            <option value='2'>Karachi</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        faisal
+                    </td>
+                    <td>
+                        <input type="text" class="contact" value='5555555' />
+                    </td>
+                    <td>
+                        <select>
+                            <option value='1'>--selected--</option>
+                            <option value='1'>Lahore</option>
+                            <option value='2' selected="selected">Karachi</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

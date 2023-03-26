@@ -1,0 +1,129 @@
+<html>
+<head>
+    <title>Handlebar Practice</title>
+    <script src="../jquery-1.9.1.min.js" type="text/javascript"></script>
+	<script src="handlebars.js" type="text/javascript"></script>
+    
+</head>
+<body>
+    <script type="text/javascript">
+        //Ready function to fire once DOM is ready
+        $(document).ready(MainFunction);
+
+        //Function to fine at DOM ready
+        function MainFunction() {
+
+            //Add button 
+            $("#lnkAdd").click(function () {
+
+                var dataObj = {};
+                dataObj.ID = 1;
+                dataObj.Name = "ABC";
+
+                var source = $("#jobsrowtemplate").html();
+                var template = Handlebars.compile(source);
+
+                var html = template(dataObj);
+                $("#container").append(html);
+
+                return false;
+            });
+
+            //Show Data in List
+            $("#lnkShowList").click(function () {
+
+                var list = [];
+                list.push({ ID: 1, Name: 'ABC1' });
+                list.push({ ID: 2, Name: 'ABC2' });
+                list.push({ ID: 3, Name: 'ABC3' });
+
+                var source = $("#listtemplate").html();
+                var template = Handlebars.compile(source);
+                //Our template is expecting an Object which should contain a list named 'DataList' and this list should contain object with properties 'ID' and 'Name'
+
+                var obj = { DataList: list };
+
+                var html = template(obj);
+                $("#alldatacontainer").append(html);
+
+                return false;
+            });
+
+            //Generate Row with form elements
+            $("#lnkAddForm").click(function () {
+
+                var dataObj = {};
+
+                var source = $("#formrowtemplate").html();
+                var template = Handlebars.compile(source);
+
+                var html = template(dataObj);
+                $("#tblFormData").append(html);
+
+                return false;
+            });
+        }
+        
+    </script>
+    <a id="lnkAdd" href="#">Add </a>
+    <div>
+        Single Row Container:
+        <br />
+        <table id="container">
+        </table>
+    </div>
+    <br />
+    <a id="lnkShowList" href="#">Show List </a>
+    <div>
+        Show List Container:
+        <br />
+        <table id="alldatacontainer">
+        </table>
+    </div>
+    <br />
+    <a id="lnkAddForm" href="#">Add Form Elemnts Row </a>
+    <div>
+        Form Elements Container:
+        <br />
+        <table id="tblFormData">
+        </table>
+    </div>
+</body>
+</html>
+<script id="jobsrowtemplate" type="text/x-handlebars-template">
+	
+    <tr>
+		<td align="left" valign="middle">
+            <span class="jobID"  style="width: 94%;" >{{ID}}</span>
+        </td>
+        <td align="left" valign="middle">
+            <span class="jobID"  style="width: 94%;" >{{Name}}</span>
+        </td>       
+    </tr>
+	
+</script>
+<script id="listtemplate" type="text/x-handlebars-template">
+	{{#each DataList}}
+    <tr>
+		<td align="left" valign="middle">
+            <span class="jobID"  style="width: 94%;" >{{ID}}</span>
+        </td>
+        <td align="left" valign="middle">
+            <span class="jobID"  style="width: 94%;" >{{Name}}</span>
+        </td>       
+    </tr>
+	{{/each}}
+</script>
+
+<script id="formrowtemplate" type="text/x-handlebars-template">
+	
+    <tr>
+		<td align="left" valign="middle">
+            ID: <input type="text" class="customerid" />
+        </td>
+        <td align="left" valign="middle">
+            Name: <input type="text" class="custname" />
+        </td>       
+    </tr>
+	
+</script>

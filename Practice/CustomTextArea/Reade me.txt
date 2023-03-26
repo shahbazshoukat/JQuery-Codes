@@ -1,0 +1,3 @@
+Developer: Bilal Shahzad
+
+Purpose: Purpose of this Exercise is to control length on text area and also show count of characters typed.

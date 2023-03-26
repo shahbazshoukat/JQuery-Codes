@@ -1,0 +1,4 @@
+Developer: Bilal Shahzad
+
+Purpose: The purpose of this exercise to show how CSS properties can be changed to create some image animation.
+

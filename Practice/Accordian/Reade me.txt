@@ -1,0 +1,4 @@
+Developer: Bilal Shahzad
+
+Purpose: The purpose of this exercise is to create a modal popup with overlay.
+

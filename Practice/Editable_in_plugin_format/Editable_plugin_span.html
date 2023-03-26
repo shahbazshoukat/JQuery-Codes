@@ -1,0 +1,33 @@
+<html>
+<head>
+    <title>Editable Plugin</title>
+    <script src="../jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="jquery.bseditable.js" type="text/javascript"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        //Attach callback function to be called on DOM ready
+        $(document).ready(MainFunction);
+
+        //This funciton will be called by jQuery once DOM is ready
+        function MainFunction() {
+
+            //apply editable plugin on a span which has 'myspan' css class
+            $("span.myspan").bseditable();
+
+            //apply editable plugin on element/s which has 'mypara' css class
+            $(".mypara").bseditable({saveText:'S'});
+
+        } //End of MainFunction
+    
+    </script>
+
+    <div class="editablewrapper">
+        <span class="myspan">data is here</span>
+    </div>
+
+    <div class="editablewrapper">
+        <p class="mypara">more data is here</p>
+    </div>
+</body>
+</html>

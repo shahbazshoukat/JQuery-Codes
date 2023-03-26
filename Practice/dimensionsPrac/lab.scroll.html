@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>jQuery Dimensions Plugin Scrolling Lab Page</title>
+    <link rel="stylesheet" type="text/css" href="common.css">
+    <script src="../jquery-1.9.1.min.js" type="text/javascript"></script>
+
+    <style type="text/css">
+        body
+        {
+            width: 2000px;
+            height: 2000px;
+        }
+
+        h2
+        {
+            font-size: 1.4em;
+            margin-bottom: 8px;
+        }
+
+        fieldset
+        {
+            width: 480px;
+        }
+
+        #testSubject
+        {
+            width: 360px;
+            height: 200px;
+            overflow: scroll;
+        }
+
+        label
+        {
+            font-weight: bold;
+            margin-left: 8px;
+        }
+
+        #scrollTopValueControl, #scrollLeftValueControl
+        {
+            width: 48px;
+        }
+    </style>
+</head>
+
+<body>
+    <script type="text/javascript">
+        //Attach callback function to be called on DOM ready
+        $(document).ready(MainFunction);
+
+        //This funciton will be called by jQuery once DOM is ready
+        function MainFunction() {
+
+
+            //Button click event to apply entered postions on scroll
+            $('#applyButton').bind('click', function () {
+                //Check which radio button is checked
+                var rdoVal = $('input[name=target]:radio:checked').val();
+
+                var targetObj = null;
+
+                //Check what radio button is selected and get related object
+                if (rdoVal == 'window')
+                {
+                    targetObj = $(window);
+                }
+                else if (rdoVal == 'document')
+                {
+                    targetObj = $(document);
+                }
+                else if (rdoVal == 'div')
+                {
+                    targetObj = $('#testSubject');
+                }
+
+                //Get values to scroll
+                var scrollTopValue = $('#scrollTopValueControl').val();
+                var scrollLeftValue = $('#scrollLeftValueControl').val();
+
+                //If provided values are valid
+                if (scrollTopValue != '')
+                    targetObj.scrollTop(scrollTopValue);
+                //If provided values are valid
+                if (scrollLeftValue != '')
+                    targetObj.scrollLeft(scrollLeftValue);
+
+                //Show related scroll positions 
+                showInfo();
+                return false;
+            });
+
+            //Button reset button event to reset scroll positions
+            $('#restoreButton').click(function () {
+                $(window).scrollLeft(0).scrollTop(0);
+                $('#testSubject').scrollLeft(0).scrollTop(0);
+                showInfo();
+            });
+
+
+            //attach a function which will be called whenever a scroll will be applied on window
+            $(window).scroll(showInfo);
+            //attach a function which will be called whenever a scroll will be applied on custom div
+            $('#testSubject').scroll(showInfo);
+
+            //Call to show original positions state in start
+            showInfo();
+
+
+        } //End of MainFunction
+
+        //Function to show scroll positions
+        function showInfo() {
+
+            //Get top/left scroll position of window and show it
+            $('#windowInfo').html('scrollTop: ' + $(window).scrollTop() + ' scrollLeft: ' + $(window).scrollLeft());
+            //Get top/left scroll position of document and show it
+            $('#documentInfo').html('scrollTop: ' + $(document).scrollTop() + ' scrollLeft: ' + $(document).scrollLeft());
+            //Get top/left scroll position of #testSubject and show it
+            $('#divInfo').html('scrollTop: ' + $('#testSubject').scrollTop() + ' scrollLeft: ' + $('#testSubject').scrollLeft());
+        }
+
+    </script>
+
+    <h1>Scrolling Lab</h1>
+    <fieldset>
+        <legend>Lab Control Panel</legend>
+        <form id="controlPanelForm" action="" autocomplete="false">
+            <div>
+                <div>
+                    <label>scrollTop:</label>
+                    <input type="text" name="scrollTopValue" id="scrollTopValueControl" />
+                </div>
+                <div>
+                    <label>scrollLeft:</label>
+                    <input type="text" name="scrollLeftValue" id="scrollLeftValueControl" />
+                </div>
+                <div id="targetContainer">
+                    <label>Apply to:</label>
+                    <input type="radio" name="target" value="window" />
+                    window
+           
+                    <input type="radio" name="target" value="document" />
+                    document
+           
+                    <input type="radio" name="target" value="div" checked="checked" />
+                    test subject
+         
+                </div>
+            </div>
+
+            <div>
+                <button id="applyButton" type="submit">Apply</button>
+                <button id="restoreButton" type="button">Restore</button>
+            </div>
+
+        </form>
+        <h2>Results:</h2>
+        <div id="resultsContainer">
+            <div>
+                <label>Window:</label>
+                <span id="windowInfo"></span>
+            </div>
+            <div>
+                <label>Document:</label>
+                <span id="documentInfo"></span>
+            </div>
+            <div>
+                <label>Test subject:</label>
+                <span id="divInfo"></span>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Test subject</legend>
+        <div id="testSubject">
+            <img src="IMG_2227.jpg" />
+        </div>
+    </fieldset>
+
+</body>
+</html>

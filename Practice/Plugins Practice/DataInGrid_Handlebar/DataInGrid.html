@@ -1,0 +1,340 @@
+<html>
+<head>
+    <title>Grid Prac</title>
+    <script src="../jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="handlebars.js" type="text/javascript"></script>
+    <style type="text/css">
+        .tblData
+        {
+            border: 1px solid #bfbfbf;
+            font-size: 12px;
+        }
+        .tblData .mod
+        {
+            background: #FFF3CF;
+        }
+        .tblData tr th
+        {
+            font-weight: bold;
+            font-size: 11px;
+            background-color: #e1eefc;
+            padding: 5px;
+            border-right: 1px solid #bfbfbf;
+            border-bottom: 1px solid #bfbfbf;
+            border-top: 1px solid #BFBFBF;
+        }
+        .tblData tr th:first-child
+        {
+            border-left: 1px solid #bfbfbf;
+        }
+        .tblData td.grey
+        {
+            background-color: #f3f3f3;
+        }
+        .tblData .filterHeader
+        {
+            width: 94%;
+            padding: 3px 2px;
+            border: none;
+            background: transparent;
+            color: #a5a5a5;
+        }
+        .tblData .filterHeader:active, .tblData .filterHeader:focus
+        {
+            box-shadow: none;
+            border: none;
+        }
+        .tblData tr.active, .tblData tr:hover
+        {
+            background: #e5e5e5;
+            position: relative;
+        }
+        .tblData tr td
+        {
+            padding: 2px;
+            border-right: 1px solid #bfbfbf;
+            border-bottom: 1px solid #bfbfbf;
+            vertical-align: middle;
+        }
+        .tblData .tblActions
+        {
+            overflow: hidden;
+            padding-left: 25%;
+        }
+        .tblData .tblActions a
+        {
+            float: left;
+            margin-right: 5px;
+        }
+        .tblData .tblActions a.delete
+        {
+            background: url(images/icon-delete-up.png) no-repeat center center;
+            width: 14px;
+            height: 14px;
+        }
+        .tblData .tblActions a.edit
+        {
+            background: url(images/icon-edit.png) no-repeat center center;
+            width: 14px;
+            height: 14px;
+        }
+        .tblData .tblActions a.Save
+        {
+            background: url(images/icon-save.png) no-repeat center center;
+            width: 14px;
+            height: 14px;
+        }
+        .tblData .tblActions a.Cancel, tr.addmode .delete
+        {
+            background: url(images/icon-cancel.png) no-repeat center center !important;
+            width: 14px !important;
+            height: 14px !important;
+        }
+        
+        .tblData .tablesorter-header, .tblData .tablesorter-header.tablesorter-headerAsc, tblData .tablesorter-header.tablesorter-headerDesc
+        {
+            background-position: right 6px !important;
+        }
+        .tblData a.add
+        {
+            background: url(images/icon-add-grey.png) no-repeat left center;
+            width: 12px;
+            height: 12px;
+            padding-left: 20px;
+            padding-top: 2px;
+            color: #6b6b6b;
+            margin: 0px 5px;
+        }
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
+
+
+        //Ready function to fire once DOM is ready
+        $(document).ready(MainFunction);
+
+        //Function to fine at DOM ready
+        function MainFunction() {
+
+            LoadDummyData();
+
+            //Add button event handler
+            $('.add').bind("click", function (e) {
+                e.preventDefault();
+
+                if ($("tr.addmode").length > 0) {
+                    alert('already one row in add mode');
+                    return false;
+                }
+
+                var source = $("#addrowtemplate").html();
+                var template = Handlebars.compile(source);
+
+                var html = template({});
+
+                //Find Add button row and add dummy row after that
+                $("#tablebody .grey").after(html);
+
+                var $tr = $("tr#Contact_0");
+
+                $tr.find(".Save").show();
+                $tr.find(".edit").hide();
+
+                $tr.find(".Save").bind("click", function () {
+
+                    SaveRow($(this).closest("tr"));
+
+                    return false;
+                }); //end of Save event handler 
+
+                $tr.find(".delete").bind("click", function () {
+
+                    var result = confirm('do you want to remove this row');
+                    if (result == true) {
+                        $tr.remove();
+                    }
+                    return false;
+                }); //end of Delete event handler 
+
+                return false;
+            });                 //End of Add Button click handler
+
+            $(".save").click(function () {
+
+                var $tr = $(this).closest("tr");
+
+                SaveRow($tr);
+
+                return false;
+            });  //Save click handler
+
+            $(".Cancel").click(function () {
+
+                var $tr = $(this).closest("tr");
+
+                CancelEditMode($tr);
+
+                return false;
+            });    //Save click handler
+
+            $(".edit").click(function () {
+
+                var $tr = $(this).closest("tr");
+
+                $(this).hide();
+                $tr.addClass("selected").addClass("editmode");
+
+                $tr.find(".delete").hide();
+                $tr.find(".Save").show();
+                $tr.find(".Cancel").show();
+                $tr.find("input").removeAttr('readonly');
+
+                return false;
+            });//Edit click handler
+
+            $(".delete").bind("click", function () {
+
+                var result = confirm('do you want to remove this row');
+                if (result == true) {
+                    $(this).closest("tr").remove();
+                }
+                return false;
+            }); //end of Delete event handler 
+
+        } //End of MainFunction
+
+        function CancelEditMode($tr) {
+            var act_name = $tr.find("input.Name").attr('Name');
+            var act_contact = $tr.find("input.Contact").attr('Contact');
+
+            $tr.removeClass("addmode").removeClass("editmode");
+
+            $tr.find("input.Name").val(act_name).attr('readonly', 'readonly');
+            $tr.find("input.Contact").val(act_contact).attr('readonly', 'readonly');
+
+            $tr.find(".Save").hide();
+            $tr.find(".delete").show();
+            $tr.find(".Cancel").hide();
+            $tr.find(".edit").show();
+        
+        }
+
+        function SaveRow($tr) {
+            var name = $tr.find("input.Name").val();
+            var contact = $tr.find("input.Contact").val();
+
+            $tr.removeClass("addmode").removeClass("editmode");
+
+            $tr.attr("id", "");
+
+            $tr.find("input.Name").attr("Name", name).attr('readonly', 'readonly');
+            $tr.find("input.Contact").attr("Contact", contact).attr('readonly', 'readonly');
+
+            $tr.find(".Save").hide();
+            $tr.find(".delete").show();
+            $tr.find(".Cancel").hide();
+            $tr.find(".edit").show();
+        
+        }
+
+        function LoadDummyData() {
+
+            var list = [];
+            list.push({ ID: 1, Name: 'ABC1', Contact: '112345' });
+            list.push({ ID: 2, Name: 'ABC2', Contact: '112345' });
+            list.push({ ID: 3, Name: 'ABC3', Contact: '112345' });
+
+            var source = $("#gridrowtemplate").html();
+            var template = Handlebars.compile(source);
+
+            //Our template is expecting an Object which should contain a list named 'Customers' and this list should contain object with properties 'ID' and 'Name'
+            var obj = { Customers: list };
+
+            var html = template(obj);
+            $("#tablebody").append(html);
+        }
+
+       
+    
+    </script>
+    <div>
+        <div>
+            Customers Data</div>
+        <table width="70%" border="1" cellspacing="0" cellpadding="0" class="tblData">
+            <thead>
+                <tr>
+                    <th scope="col" width="10%">
+                        &nbsp;
+                    </th>
+                    <th width="50%" align="left" valign="middle" scope="col">
+                        Name
+                    </th>
+                    <th width="40%" align="left" valign="middle" scope="col">
+                        Contact
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="tablebody">
+                <tr class="grey">
+                    <td>
+                        <a href="#" class="add" title="Click to add a new skill">Add</a>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+<script id="gridrowtemplate" type="text/x-handlebars-template">
+
+   {{#each Customers}}
+
+    <tr id="Contact_{{ID}}">
+       <td align="center" valign="middle" class = "firsttd">
+           <div class="tblActions">
+                <a href="#" align="left" class="Save" style = "display:none" ></a>  
+                <a href="#" align="left" class="Cancel" style = "display:none" ></a> 
+                <a href="#" class="delete" ></a>
+			    <a href="#" class="edit" ></a>
+   
+           </div>          
+        </td>
+
+        <td align="left" valign="middle">
+            <input type="text" maxlength="50"  Name="{{Name}}" class="Name" value="{{Name}}" style="width: 94%;" readonly />
+        </td>
+        <td align="left" valign="middle">
+            <input type="text" maxlength="50"  Contact = "{{Contact}}" class="Contact" value="{{Contact}}" style="width: 94%;" readonly />
+        </td>
+    </tr>
+    
+    {{/each}}
+</script>
+
+<script id="addrowtemplate" type="text/x-handlebars-template">
+
+    <tr id="Contact_0" class="addmode">
+       <td align="center" valign="middle" class = "firsttd">
+           <div class="tblActions">
+                <a href="#" align="left" class="Save" style = "display:none" ></a>  
+                <a href="#" align="left" class="Cancel" style = "display:none" ></a> 
+                <a href="#" class="delete" ></a>
+			    <a href="#" class="edit" ></a>
+   
+           </div>          
+        </td>
+
+        <td align="left" valign="middle">
+            <input type="text" maxlength="50" class="Name" value="{{Name}}" style="width: 94%;" />
+        </td>
+        <td align="left" valign="middle">
+            <input type="text" maxlength="50" class="Contact" value="{{Contact}}" style="width: 94%;" />
+        </td>
+    </tr>
+    
+</script>

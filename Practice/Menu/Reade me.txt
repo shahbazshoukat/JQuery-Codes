@@ -1,0 +1,6 @@
+Developer: Bilal Shahzad
+
+Purpose: The purpose of this exercise create a menu/submenu behavior using ul/li. Main use is of CSS.
+
+
+

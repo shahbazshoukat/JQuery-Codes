@@ -1,0 +1,6 @@
+Developer: (Taken from 'jQuery in Action book Code examples')
+
+Purpose: LiveQuery is very useful plugin if you want to execute somecall back when DOM is effected (after DOM is fully loaded) or you want to bind with some event of element (and that element is not in DOM yet).
+
+
+https://github.com/brandonaaron/livequery

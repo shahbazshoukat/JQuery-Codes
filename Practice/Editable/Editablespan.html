@@ -1,0 +1,83 @@
+<html>
+<head>
+    <title>Editable Span</title>
+    <script src="../jquery-1.9.1.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        $(document).ready(MainFunction);
+
+        function MainFunction() {
+
+            var $span = $("span.myspan")
+
+            //Bind Click Event with span
+            $span.bind("click", function () {
+
+                //Get span object in a variable
+                var $span = $(this);
+                
+                //Hide span
+                $span.hide();
+
+                //Create a dummy div to wrap html controls
+                var $dummydiv = $("<div>");
+                var $textBox = $("<input>").attr("type", "text");
+
+                var spText = $span.text(); //Get Text from Span
+                spText = $.trim(spText); //Trim spaces 
+                $textBox.val(spText); //Set span text value in Textbox
+
+                //Append textbox in dummy div                
+                $dummydiv.append($textBox);
+
+
+                //Create save button which will get value from text box and will set to span
+                var $save = $("<button>");
+                $save.text('Save');
+                $dummydiv.append($save);
+
+                //Bind click event of Save button
+                $save.bind("click", function (obj, e) {
+                
+                    //find textbox in current div
+                    var $text = $(this).closest("div").find("input");
+
+                    $span.text($text.val()); //Set text box value back to span
+                    $span.show(); //make span visible
+                    $(this).closest("div").remove(); //remove dummy create div
+                    return false;
+                });
+                
+
+                //Create cancel button to remove input controls and show Span again
+                var $cancel = $("<button>");
+                $cancel.text('Cancel');
+                $dummydiv.append($cancel);
+                
+                //Bind click event on cancel button
+                $cancel.bind("click", function (obj, e) {
+
+                    $span.show(); //make span visible
+                    $(this).closest("div").remove();
+                    return false;
+                }); //End of Cancel event handler
+
+
+                //Append this newly created div in our wrapper div
+                $("div.mywrapper").append($dummydiv);
+
+
+            });    // End of Span Click bind
+
+
+
+        } //End of MainFunction
+    
+    </script>
+
+    <div class="mywrapper">
+        <span class="myspan">data is here</span>
+    </div>
+</body>
+</html>

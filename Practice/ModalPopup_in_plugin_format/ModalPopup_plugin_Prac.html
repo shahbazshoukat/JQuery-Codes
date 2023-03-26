@@ -1,0 +1,113 @@
+<html>
+<head>
+    <title>Modal Popup Plugin Prac</title>
+    <script src="../jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="jquery.bsmodal.js" type="text/javascript"></script>
+
+    <style type="text/css">
+        .overlay {
+            position: fixed;
+            display: none;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            z-index: 101;
+            background-color: #000000;
+            opacity: .15;
+            filter: alpha(opacity=15);
+            -moz-opacity: .15;
+            z-index: 101;
+        }
+
+        .web_dialog {
+            left: 50%;
+            top: 50%;
+            width: 200px;
+            height: 200px;
+            background-color: White;
+            border-color: Black;
+            border-style: solid;
+            z-index: 102;
+            display: none;
+            position: fixed;
+            margin-left: -100px;
+            margin-top: -100px;
+        }
+
+        .dialog_title {
+            background-color: Gray;
+            padding: 2px;
+            color: White;
+            border-bottom: solid 2px #336699;
+        }
+
+            .dialog_title a {
+                color: White;
+                text-align: right;
+            }
+
+        .align_right {
+            text-align: right;
+        }
+
+        .content {
+            padding: 2px;
+        }
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
+        $(document).ready(MainFunction);
+
+        function MainFunction() {
+
+            /*Here we are creating settings object and then calling bsmodal plugin on some selector, when elements of 
+                this selector will be clicked, modal popup will be shown
+            */
+            var settings = { overlayClass: 'overlay', closeid: '#lnkClose', saveid: '#btnOK' };
+            $("#lnkShowDialog").bsmodal(settings);
+
+
+            
+            $('#lnkShowDialog2').click(function () {
+                //Show Modal dialog manually
+                //Provide selector of element to show as modal popup and settings parameter
+                $.bsmodal.show('#modal_dialog', settings);
+            });
+
+
+        } //End of MainFunction
+
+
+    </script>
+    <div id="divoverlay" class="overlay">
+    </div>
+    <div>
+        <a href="#" id="lnkShowDialog" popupdiv="#modal_dialog">Show Dialog</a> <span id="spText"></span>
+        <a href="#" id="lnkShowDialog2">Show Dialog By Global function</a>
+    </div>
+    <div id="modal_dialog" class="web_dialog">
+        <table style="width: 100%; border: 0px;" cellpadding="3" cellspacing="0">
+            <tr>
+                <td class="dialog_title">
+                    Modal Demo
+                </td>
+                <td class="dialog_title align_right">
+                    <a id="lnkClose" href="#">close</a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="content">
+                        Name:<input id="txtName" type="text" />
+                        <button id="btnOK" value="OK">OK</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

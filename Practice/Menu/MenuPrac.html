@@ -1,0 +1,165 @@
+<html>
+<head>
+    <title>Menu Practice</title>
+    <script src="../jquery-1.9.1.min.js" type="text/javascript"></script>
+    <style type="text/css">
+        /* CSS For Dropdown Menu Start */
+        ul
+        {
+            list-style: none;
+            padding: 0px;
+            margin: 0px;
+        }
+        
+        ul li
+        {
+            display: inline;
+            float: left;
+        }
+        
+        ul li a
+        {
+            color: #ffffff;
+            background: #990EFF;
+            margin-right: 5px;
+            font-weight: bold;
+            font-size: 12px;
+            font-family: verdana;
+            text-decoration: none;
+            display: block;
+            width: 100px;
+            height: 25px;
+            line-height: 25px;
+            text-align: center;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border: 1px solid #560E00;
+        }
+        
+        ul li a:hover
+        {
+            color: #cccccc;
+            background: #560EEE;
+            font-weight: bold;
+            text-decoration: none;
+            display: block;
+            width: 100px;
+            text-align: center;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border: 1px solid #000000;
+        }
+        
+        ul li.sublinks a
+        {
+            color: #000000;
+            background: #f6fff6;
+            border-bottom: 1px solid #cccccc;
+            font-weight: normal;
+            text-decoration: none;
+            display: block;
+            width: 100px;
+            text-align: center;
+            margin-top: 2px;
+        }
+        
+        ul li.sublinks a:hover
+        {
+            color: #000000;
+            background: #FFECC6;
+            font-weight: normal;
+            text-decoration: none;
+            display: block;
+            width: 100px;
+            text-align: center;
+        }
+        
+        ul li.sublinks
+        {
+            display: none;
+        }
+        
+        /* CSS For Dropdown Menu End */
+        #container
+        {
+            margin: 0px auto;
+            width: 570px;
+        }
+        
+        .clear
+        {
+            clear: both;
+        }
+        
+        .left
+        {
+            float: left;
+        }
+        
+        .right
+        {
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
+        $(document).ready(MainFunction);
+
+        function MainFunction() {
+
+            //Bind mouseenter events with all menu items (the first li in each ul)
+            $('.dropdown').mouseenter(function () {
+
+                //Whenever mouse enters to a menu, we should stop existing animations and hide open menues
+                $('.sublinks').stop(false, true).hide();
+
+                //Go to parent(which is li) of a.dropdown element and then find next (which is li and contains submenu)
+                var submenu = $(this).parent().next(); //var submenu = $(this).closest('ul').find('li.sublinks');
+
+                //apply CSS to show li by chaging its position and then related top/left properties
+                submenu.css({
+                    position: 'absolute',
+                    top: $(this).offset().top + $(this).height() + 'px',
+                    left: $(this).offset().left + 'px',
+                    zIndex: 1000
+                });
+
+                //stop animation and then open it in slide down format
+                submenu.stop().slideDown(300);
+
+                //also bind mouse leave event to close submenu
+                submenu.mouseleave(function () {
+                    $(this).slideUp(300);
+                });
+            });
+
+
+        } //End of MainFunction
+    
+    </script>
+    <div id="container" style="margin-top: 40px;">
+        <!-- First Menu Start -->
+        <ul>
+            <li><a href="#" class="dropdown">Menu One</a></li>
+            <li class="sublinks"><a href="#">Link 1</a> <a href="#">Link 2</a> <a href="#">Link
+                3</a> <a href="#">Link 4</a> <a href="#">Link 5</a> </li>
+        </ul>
+        <!-- First Menu End -->
+        <!-- Second Menu Start -->
+        <ul>
+            <li><a href="#" class="dropdown">Menu Two</a></li>
+            <li class="sublinks"><a href="#">Link 1</a> <a href="#">Link 2</a> <a href="#">Link
+                3</a> <a href="#">Link 4</a> <a href="#">Link 5</a> </li>
+        </ul>
+        <!-- Second Menu End -->
+        <!-- Third Menu Start -->
+        <ul>
+            <li><a href="#" class="dropdown">Menu Three</a></li>
+            <li class="sublinks"><a href="#">Link 1</a> <a href="#">Link 2</a> <a href="#">Link
+                3</a> <a href="#">Link 4</a> <a href="#">Link 5</a> </li>
+        </ul>
+        <!-- Third Menu End -->
+    </div>
+</body>
+</html>

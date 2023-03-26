@@ -1,0 +1,4 @@
+Developer: Bilal Shahzad
+
+Purpose: The purpose of this exercise is to divide elements in chunks and then provide paging behavior.
+

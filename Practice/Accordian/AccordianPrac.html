@@ -1,0 +1,82 @@
+<html>
+<head>
+    <title>Accordian Prac</title>
+    <script src="../jquery-1.9.1.min.js" type="text/javascript"></script>
+    <style type="text/css">
+        div.accordpanel div.header {
+            background-color: Gray;
+            padding: 2px;
+            color: White;
+            border-bottom: solid 2px #336699;
+        }
+
+        div.accordpanel div.content {
+            display: none;
+            background-color: White;
+            border-color: Black;
+            border-style: solid;
+        }
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
+
+        //Attach a function to fire on DOM ready
+        $(document).ready(MainFunction);
+
+        //Function which will be executed by jQuery when DOM will be ready
+        function MainFunction() {
+
+            //Find all panels and then header divs
+            $('.accordpanel div.header').each(function () {
+
+                //For every header, attach click event
+                $(this).click(function (event) {
+                    //To stop actual/default functionality of the link
+                    event.preventDefault();
+
+                    //Find panel with reference of header (which is clicked)
+                    var $newPanel = $(this).closest('.accordpanel');
+
+                    //If the current panel already has current class, it means, its time to hide it
+                    if ($newPanel.hasClass('current') == true) {
+                        //Remove current class from panel, find content div inside panel and hide it
+                        $newPanel.removeClass('current').find('div.content').slideUp();
+                    }
+                    else {
+
+                        //Find panel whic has current class, Remvoe current class, then find content div in it and hide it
+                        $('.main_wrapper div.current').removeClass('current').find('.content').slideUp();
+
+                        //Apply current class on current panel and then find content inside it to show
+                        $newPanel.addClass('current').find('div.content').slideDown();
+                    }
+                    //To stop actual/default functionality of the link
+                    return false;
+                });//End of click event
+
+            });//End of each
+
+        } //End of MainFunction
+
+
+    </script>
+
+    <div class="main_wrapper">
+
+        <div class="accordpanel">
+            <div class="header">Header 1</div>
+            <div class="content">The holiday season is here and retailers are spending more on online advertising to promote their products. Your blog has valuable space and you can earn some extra money by placing Google AdSense ads next to your content.The holiday season is here and retailers are spending more on online advertising to promote their products. Your blog has valuable space and you can earn some extra money by placing Google AdSense ads next to your content.The holiday season is here and retailers are spending more on online advertising to promote their products. Your blog has valuable space and you can earn some extra money by placing Google AdSense ads next to your content.The holiday season is here and retailers are spending more on online advertising to promote their products. Your blog has valuable space and you can earn some extra money by placing Google AdSense ads next to your content.</div>
+        </div>
+        <div class="accordpanel">
+            <div class="header">Header 2</div>
+            <div class="content">The holiday season is here and retailers are spending more on online advertising to promote their products. Your blog has valuable space and you can earn some extra money by placing Google AdSense ads next to your content.The holiday season is here and retailers are spending more on online advertising to promote their products. Your blog has valuable space and you can earn some extra money by placing Google AdSense ads next to your content.The holiday season is here and retailers are spending more on online advertising to promote their products. Your blog has valuable space and you can earn some extra money by placing Google AdSense ads next to your content.The holiday season is here and retailers are spending more on online advertising to promote their products. Your blog has valuable space and you can earn some extra money by placing Google AdSense ads next to your content.</div>
+        </div>
+        <div class="accordpanel">
+            <div class="header">Header 3</div>
+            <div class="content">The holiday season is here and retailers are spending more on online advertising to promote their products. Your blog has valuable space and you can earn some extra money by placing Google AdSense ads next to your content.The holiday season is here and retailers are spending more on online advertising to promote their products. Your blog has valuable space and you can earn some extra money by placing Google AdSense ads next to your content.The holiday season is here and retailers are spending more on online advertising to promote their products. Your blog has valuable space and you can earn some extra money by placing Google AdSense ads next to your content.The holiday season is here and retailers are spending more on online advertising to promote their products. Your blog has valuable space and you can earn some extra money by placing Google AdSense ads next to your content.</div>
+        </div>
+    </div>
+
+</body>
+</html>

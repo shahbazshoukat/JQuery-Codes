@@ -1,0 +1,4 @@
+Developer: Bilal Shahzad
+
+Purpose: The purpose of this exercise to make a span editable. User can click on span and after changes can save/cancel. span will be updated accordingly. This also explains how we can create an editable plugin.
+

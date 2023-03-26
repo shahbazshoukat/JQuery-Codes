@@ -1,0 +1,4 @@
+Developer: Bilal Shahzad
+
+Purpose: The purpose of this exercise create a very simple slider without animation and then with animation. A little CSS is also involved in this. Please try to understand the code and then try to create this by your own.
+

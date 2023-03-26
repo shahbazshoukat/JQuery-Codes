@@ -1,0 +1,206 @@
+
+<html>
+<head>
+    <title>Form- JSON practice</title>
+    <script src="jquery-1.9.1.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <script type="text/javascript">
+
+        //Ready function to fire once DOM is ready
+        $(document).ready(MainFunction);
+
+        //Function to fine at DOM ready
+        function MainFunction() {
+
+            $("#btnSave").bind("click", function () {
+
+                //Read data from form elements
+
+
+                var cname = $("#txtCustName").val();
+                var cont = $("#txtContact").val();
+
+                //Get text of selected item in drop down
+                var prov = $("#cmbProvince option:selected").text();
+                var city = $("#cmbCity option:selected").text();
+                var addre = $("#txtAddress").val();
+                var gend = "";
+
+                //Check if rdoMale is checked
+                if ($("#rdoMale").is(":checked") == true)
+                    gend = "Male";
+                else
+                    gend = "Female";
+
+                var edu = $("#cmbEducation option:selected").text();
+
+                var sports = "";
+
+                if ($("#chkCricket").is(":checked") == true)
+                    sports = "Cricket" + ",";
+
+                if ($("#chkHockey").is(":checked") == true)
+                    sports = sports + "Hockey" + ",";
+
+                //Create JavaScript Object in proper style
+                var cust = new Object();
+                //Create properties in this object 
+                cust.Name = cname;
+                cust.Contact = cont;
+                cust.Province = prov;
+                cust.City = city;
+                cust.Address = addre;
+                cust.Gender = gend;
+                cust.Education = edu;
+                cust.Sports = sports;
+
+                /* We can also create object by using literal notation, alterative of above code is following line 
+                var cust = {Name:cname,Contact:cont,Province:prov,City:city,Address:addre,Gender:gend,Education:edu,Sports:sports};
+                */
+
+                //Convert above object into JSON string
+                var str = JSON.stringify(cust);
+
+                alert(str);
+
+                //convert object from JSON string
+                var obj = JSON.parse(str);
+                alert(obj.Name);
+
+
+            });      //end of btnSave Click Event handler                   
+
+
+            $("#cmbProvince").bind("change", function () {
+
+                $("#cmbCity").empty();
+                $("#cmbCity").append("<option value='0'>--Select--</option>");
+
+                var provid = $(this).val();
+                if (provid == 1) //Punjab
+                {
+                    $("#cmbCity").append("<option value='1'>Lahore</option>");
+                    $("#cmbCity").append("<option value='2'>Multan</option>");
+                }
+                else if (provid == 2) //KPK
+                {
+                    $("#cmbCity").append("<option value='1'>Peshwar</option>");
+                    $("#cmbCity").append("<option value='2'>Swat</option>");
+                }
+            });     //End of Provice dropdown change event handler
+
+
+            $("#btnClear").click(function () {
+
+                $("#txtCustName").val('');
+                $("#txtContact").val('');
+                $("#cmbProvince").val('0');
+                $("#cmbCity").val('0');
+                $("#txtAddress").val('');
+                $("#rdoMale").attr("checked", true);
+                $("#rdoFemale").attr("checked", false);
+                $("#cmbEducation").val('0');
+
+                $("#chkCricket").attr("checked", false);
+                $("#chkHockey").attr("checked", false);
+
+                
+            }); //End of Clear button event handler
+
+        } //End of MainFunction
+    
+    </script>
+    <div>
+        <table>
+            <tr>
+                <td>
+                    Customer Name:
+                </td>
+                <td>
+                    <input id="txtCustName" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Contact:
+                </td>
+                <td>
+                    <input id="txtContact" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Province
+                </td>
+                <td>
+                    <select id="cmbProvince">
+                        <option value="0">--Select--</option>
+                        <option value="1">Punjab</option>
+                        <option value="2">KPK</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    City
+                </td>
+                <td>
+                    <select id="cmbCity">
+                        <option value="0">--Select--</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Address:
+                </td>
+                <td>
+                    <textarea id="txtAddress" cols="20" rows="5"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Gender:
+                </td>
+                <td>
+                    Male:
+                    <input type="radio" id="rdoMale" name="gender" checked="checked" />
+                    Female:
+                    <input type="radio" id="rdoFemale" name="gender" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Education
+                </td>
+                <td>
+                    <select id="cmbEducation">
+                        <option value="0">--Select--</option>
+                        <option value="1">Matric</option>
+                        <option value="2">Intermediat</option>
+                        <option value="3">Bsc</option>
+                    </select>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    Sports
+                </td>
+                <td>
+                    Cricket:<input type="checkbox" id="chkCricket" />Hockey:<input type="checkbox" id="chkHockey" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="button" value="Save" id="btnSave" />
+                    <input type="button" value="Clear" id="btnClear" />
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

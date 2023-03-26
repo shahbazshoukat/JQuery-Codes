@@ -1,0 +1,163 @@
+<html>
+<head>
+    <title>Subjects Practices</title>
+    <script src="../jquery-1.9.1.min.js" type="text/javascript"></script>
+    <style type="text/css">
+        .error
+        {
+            background-color: Red;
+        }
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
+        $(document).ready(MainFunction);
+
+        function MainFunction() {
+
+            alert('ready');
+
+            $("#btnAdd").click(function (obj, event) {
+
+                var $table = $("#tblSubjects");
+
+                var $tr = $("<tr>");
+
+                if ($("#tblSubjects tr").length < 5) {
+                    var $td = $("<td>").text("Subject");
+                    $tr.append($td);
+
+                    $td = $("<td>");
+                    var $textbox = $("<input>").attr("id", "txtSubject").attr("type", "text");
+                    $td.append($textbox);
+                    $tr.append($td);
+
+                    $td = $("<td>").text("Marks");
+                    $tr.append($td);
+
+                    $td = $("<td>");
+                    $textbox = $("<input>").attr("id", "txtMarks").attr("type", "text");
+                    $td.append($textbox);
+                    $tr.append($td);
+
+                    $td = $("<td>");
+                    var $button = $("<button>");
+                    $button.text("X");
+                    $td.append($button);
+                    $tr.append($td);
+
+                    $table.append($tr);
+
+                    $button.bind("click", function (obj, e) {
+
+                        var $isConfirm = confirm("Record will be deleted. Click Ok to continue and Cancel to Ignore");
+                        if ($isConfirm == true) {
+                            $(this).closest("tr").remove();
+                        }
+                        else
+                            return false;
+
+                    });
+                }
+                else {
+                    alert("you have already added 5 rows");
+                    return false;
+                }
+            }); //End of btnAdd click event handler
+
+            //Save Button Code
+            $("#btnSave").click(function () {
+
+                var isValid = true;
+
+                //Remove all errors if any
+                $("#tblSubjects .error").removeClass("error");
+
+                //Check if added rows are less than 3
+                if ($("#tblSubjects tr").length < 3) {
+
+                    alert("Atleast three subjects should be added");
+                    isValid = false;
+                }
+
+                $("#tblSubjects tr").each(function () {
+
+                    var $subInput = $(this).find("#txtSubject");
+                    var $markInput = $(this).find("#txtMarks");
+
+                    if ($subInput.val() == "") {
+                        $subInput.addClass("error");
+                        isValid = false;
+                    }
+
+                    if ($markInput.val() == "") {
+                        $markInput.addClass("error");
+                        isValid = false;
+                    }
+
+                });
+
+                if (isValid == false) {
+                    alert('Please fix the errors to continue');
+                    return false;
+                }
+
+                //Extract data and create a list of objects			
+                var SubjectsList = [];
+
+                $("#tblSubjects tr").each(function () {
+
+                    var itemObject = {
+                        SubjectName: $(this).find("#txtSubject").val(),
+                        Marks: $(this).find("#txtMarks").val()
+                    };
+
+                    SubjectsList.push(itemObject);
+                });
+
+                ///Now here we can do some processing but we are going to show data in a table below
+
+                var $div = $("#outputTable");
+                $div.empty();
+
+                $table = $("<table>");
+                $table.append("<tr><td> Subject </td><td> Marks</td> <td> Status </td></tr>");
+                $div.append($table);
+
+                for (var i = 0; i < SubjectsList.length; ++i) {
+                    var subj = SubjectsList[i];
+                    var status = 'Fail';
+                    if (subj.Marks >= 50)
+                        status = 'Pass';
+
+                    $table.append("<tr><td> " + subj.SubjectName + " </td><td> " + subj.Marks + "</td> <td>" + status + " </td></tr>");
+                }
+            });
+
+        } //End of MainFunction
+	
+    </script>
+    <div>
+        <table>
+            <tr>
+                <td>
+                    <input id="btnAdd" type="button" value="Add Subject" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table id="tblSubjects">
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="button" id="btnSave" value="Save" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="outputTable">
+    </div>
+</body>
+</html>

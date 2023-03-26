@@ -1,0 +1,150 @@
+<html>
+<head>
+    <title>Image Slider Practice </title>
+    <script src="../jquery-1.9.1.min.js" type="text/javascript"></script>
+    <style type="text/css">
+        ul.thumb {
+            float: left;
+            list-style: none;
+            margin: 0;
+            padding: 10px;
+        }
+
+            ul.thumb li {
+                display: none;
+                
+            }
+
+                ul.thumb li.current {
+                    display: inline;
+                }
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
+
+        //Attach some function to be called when DOM is ready
+        $(document).ready(MainFunction);
+
+        //This function will be called once DOM is ready, our Main function to do start up code
+        function MainFunction() {
+
+            //Get total count of LIs (Images)
+            var totLis = $('ul.thumb li').length;
+
+            //Set Total Count in span
+            $("span.totImg").text(totLis);
+
+            //This function will check LI in which class attribute contains 'current' and show its position in all LIs
+            SetCurrentLiPosition();
+                       
+
+            $(".next").click(function (e) {
+                //To prevent default action of hyperlink
+                e.preventDefault();
+
+                //Find Li which is currently having current class 
+                var $currLI = $('ul.thumb li.current');
+
+                //find next LI of Current LI to show
+                var $nextLI = $currLI.next('li');
+
+                //It means LI with current class is Last LI in UL, so we should show first image to move in circle
+                if ($nextLI.length == 0)
+                {
+                    //Get first Li
+                    $nextLI = $('ul.thumb li:first');
+                }
+
+                //Before making a new LI as current, remove class from existing current LI
+                $currLI.removeClass('current');
+
+                //Set current class to new LI
+                $nextLI.addClass('current');
+
+                //Also update Current LI/Image position based on above changes
+                SetCurrentLiPosition();
+
+                //To prevent default action of hyperlink
+                return false;
+            });//End of .prev click function
+
+
+            $(".prev").click(function (e) {
+                //To prevent default action of hyperlink
+                e.preventDefault();
+
+                //Find Li which is currently having current class 
+                var $currLI = $('ul.thumb li.current');
+
+                //find prev LI of Current LI to show
+                var $prevLI = $currLI.prev('li');
+
+                //It means LI with current class is first LI in UL, so we should show last image to move in circle
+                if ($prevLI.length == 0) {
+                    //Get last LI
+                    $prevLI = $('ul.thumb li:last');
+                }
+
+                //Before making a new LI as current, remove class from existing current LI
+                $currLI.removeClass('current');
+
+                //Set current class to new LI
+                $prevLI.addClass('current');
+
+                //Also update Current LI/Image position based on above changes
+                SetCurrentLiPosition();
+
+                //To prevent default action of hyperlink
+                return false;
+            });//End of .prev click function
+
+
+        } //End of MainFunction
+        
+
+        //This function will check LI in which class attribute contains 'current' and show its position in all LIs
+        function SetCurrentLiPosition()
+        {
+            var $currLi = $('ul.thumb li.current');
+            var indCurrLi = $('ul.thumb li').index($currLi);
+
+            $("span.imgPos").text(indCurrLi + 1);
+
+        }//End of SetCurrentLiPosition
+
+    </script>
+    <a href="#" class="prev">Previous</a>
+    <ul class="thumb">
+        <li  class="current">
+            <img src="images/thumb1.jpg" alt="" />
+        </li>
+        <li>
+            <img src="images/thumb2.jpg" alt="" />
+        </li>
+        <li>
+            <img src="images/thumb3.jpg" alt="" />
+        </li>
+        <li>
+            <img src="images/thumb4.jpg" alt="" />
+        </li>
+        <li>
+            <img src="images/thumb5.jpg" alt="" />
+        </li>
+        <li>
+            <img src="images/thumb6.jpg" alt="" />
+        </li>
+        <li>
+            <img src="images/thumb7.jpg" alt="" />
+        </li>
+        <li>
+            <img src="images/thumb8.jpg" alt="" />
+        </li>
+        <li>
+            <img src="images/thumb9.jpg" alt="" />
+        </li>
+    </ul>
+    <a href="#" class="next" >Next</a>
+    <div >Image <span class="imgPos">0</span> of <span class="totImg">0</span></div>
+</body>
+</html>

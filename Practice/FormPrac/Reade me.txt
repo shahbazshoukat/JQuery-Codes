@@ -1,0 +1,4 @@
+Developer: Bilal Shahzad
+
+Purpose: The purpose of this exercise to how to play with form elements in jquery. Collecting data from form elements, creating JSON string.
+

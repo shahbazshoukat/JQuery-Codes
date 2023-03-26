@@ -1,0 +1,20 @@
+@charset "utf-8";
+
+.tblData { border:1px solid #bfbfbf;font-size:12px;}
+.tblData .mod {background: #FFF3CF;}
+.tblData tr th {font-weight: bold; font-size: 11px;background-color:#e1eefc;padding:5px;border-right:1px solid #bfbfbf;border-bottom:1px solid #bfbfbf;border-top:1px solid #BFBFBF;}
+.tblData tr th:first-child { border-left: 1px solid #bfbfbf}
+.tblData td.grey { background-color: #f3f3f3 }
+.tblData .filterHeader { width: 94%; padding: 3px 2px; border: none; background: transparent; color: #a5a5a5 }
+.tblData .filterHeader:active, .tblData .filterHeader:focus {  box-shadow: none; border: none; }
+.tblData tr.active, .tblData tr:hover { background: #e5e5e5; position: relative;}
+.tblData tr td {padding:2px;border-right:1px solid #bfbfbf;border-bottom:1px solid #bfbfbf;vertical-align:middle;}
+.tblData .tblActions {overflow:hidden;padding-left:25%;}
+.tblData .tblActions a {float:left;margin-right:5px;}
+.tblData .tblActions a.delete {background:url(images/icon-delete-up.png) no-repeat center center;width:14px;height:14px;}
+.tblData .tblActions a.edit {background:url(images/icon-edit.png) no-repeat center center;width:14px;height:14px;}
+.tblData .tblActions a.Save {background:url(images/icon-save.png) no-repeat center center;width:14px;height:14px;}
+.tblData .tblActions a.Cancel, tr.addmode .delete {background:url(images/icon-cancel.png) no-repeat center center !important;width:14px !important;height:14px !important;}
+
+.tblData .tablesorter-header, .tblData .tablesorter-header.tablesorter-headerAsc, tblData .tablesorter-header.tablesorter-headerDesc { background-position: right 6px !important}
+.tblData a.add {background:url(images/icon-add-grey.png) no-repeat left center;width:12px;height:12px;padding-left:20px; padding-top: 2px;color:#6b6b6b;margin:0px 5px;}

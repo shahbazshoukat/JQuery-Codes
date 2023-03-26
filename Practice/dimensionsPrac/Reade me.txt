@@ -1,0 +1,3 @@
+Developer: (Taken from 'jQuery in Action book Code examples')
+
+Purpose: Some comments are added in existing code. It is showing how to play with scrolls.
